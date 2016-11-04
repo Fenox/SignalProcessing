@@ -1,5 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using SignalGeneration;
+using SignalGeneration.SignalProcessors;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -20,6 +22,16 @@ namespace SignalGeneratorTestViewer.ViewModel
             }
         }
 
+        public RelayCommand ApplyGaußCommand { get; set; }
+
+        public RelayCommand ApplyPrewitXCommand { get; set; }
+        public RelayCommand ApplyPrewitYCommand { get; set; }
+        public RelayCommand ApplyPrewitCommand { get; set; }
+
+        public RelayCommand ApplySobelXCommand { get; set; }
+        public RelayCommand ApplySobelYCommand { get; set; }
+        public RelayCommand ApplySobelCommand { get; set; }
+
         BitmapImage image;
         public BitmapImage Image
         {
@@ -34,11 +46,33 @@ namespace SignalGeneratorTestViewer.ViewModel
             }
         }
 
-        public ImageProcessingViewModel()
-        {
-            SGImageSignalSource imageSource = new SGImageSignalSource(@"C:\Users\Julian\Pictures\Cute Cats\Posted\4985410560_22c77a17d9_b.jpg");
+        SGImageSignalSource imageSource = new SGImageSignalSource(@"D:\OneDrive\Bilder\Icons\check-black-36px.bmp");
 
-            Image = BitmapToImageSource(imageSource.Image);            
+        public ImageProcessingViewModel()
+        {            
+            Image = BitmapToImageSource(imageSource.Image);
+
+            ApplyGaußCommand = new RelayCommand(() => ExecuteFilter(new SGGausfilter()));
+
+            ApplySobelXCommand = new RelayCommand(() => ExecuteFilter(new SGSobelX()));
+            ApplySobelYCommand = new RelayCommand(() => ExecuteFilter(new SGSobelY()));
+            ApplySobelCommand = new RelayCommand(() => ExecuteFilter(new SGSobel()));
+
+            ApplyPrewitXCommand = new RelayCommand(() => ExecuteFilter(new SGPrewitXFilter()));
+            ApplyPrewitYCommand = new RelayCommand(() => ExecuteFilter(new SGPrewitYFilter()));
+            ApplyPrewitCommand = new RelayCommand(() => ExecuteFilter(new SGPrewit()));
+        }
+
+        void ExecuteFilter(ISignalProcessor<SGImageSignalSource, SGImageSignalSource> processor)
+        {
+            var res = processor.Process(imageSource);
+           
+            Image = BitmapToImageSource(res.Image);
+
+            imageSource.Image.Dispose();
+            imageSource = res; 
+
+            RaisePropertyChanged("Image");
         }
 
         BitmapImage BitmapToImageSource(Bitmap bitmap)

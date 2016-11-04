@@ -7,6 +7,24 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Image Source="{Binding Image}" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <Image Grid.Row="0" Source="{Binding Image}" />
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" >
+            <Button Content="Gauß" Command="{Binding ApplyGaußCommand}" Width="100" Height="50" />
+        
+            <Button Content="PrewitX" Command="{Binding ApplyPrewitXCommand}" Width="100" Height="50" />
+            <Button Content="PrewitY" Command="{Binding ApplyPrewitYCommand}" Width="100" Height="50" />
+            <Button Content="Prewit" Command="{Binding ApplyPrewitCommand}" Width="100" Height="50" />
+            
+            <Button Content="SobelX" Command="{Binding ApplySobelXCommand}" Width="100" Height="50" />
+            <Button Content="SobelY" Command="{Binding ApplySobelYCommand}" Width="100" Height="50" />
+            <Button Content="Sobel" Command="{Binding ApplySobelCommand}" Width="100" Height="50" />
+        </StackPanel>
+        
     </Grid>
 </UserControl>

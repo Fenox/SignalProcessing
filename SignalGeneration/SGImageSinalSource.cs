@@ -16,6 +16,11 @@ namespace SignalGeneration
             Image = new Bitmap(path);
         }
 
+        public SGImageSignalSource(int width, int height)
+        {
+            Image = new Bitmap(width, height);
+        }
+
         public Color ValueAt(Point2DDicsrete position)
         {
             return Image.GetPixel(position.X, position.Y);

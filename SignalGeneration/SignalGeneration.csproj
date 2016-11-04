@@ -47,6 +47,9 @@
     <Compile Include="SGWienerProcessSignalSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ISGDiscreteSignalSource.cs" />
+    <Compile Include="SignalProcessors\Convolution\SGImageConvolution.cs" />
+    <Compile Include="SignalProcessors\SGFFT.cs" />
+    <Compile Include="SignalProcessors\Convolution\SGGausfilter.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
