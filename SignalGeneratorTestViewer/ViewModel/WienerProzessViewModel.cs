@@ -21,7 +21,7 @@ namespace SignalGeneratorTestViewer.ViewModel
 
         public WienerProzessViewModel()
         {
-            SGWienerProcess wp = new SGWienerProcess(0.1, 1);
+            SGWienerProcessSignalSource wp = new SGWienerProcessSignalSource(0.1, 1);
 
             for (int i = 0; i < 100; i++)
             {

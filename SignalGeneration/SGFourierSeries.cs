@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SignalGeneration
 {
-    public class SGFourierSeries : ISGDiscreteSignalSource<Point1D>
+    public class SGFourierSeries : ISGDiscreteSignalSource<Point1D, double>
     {
         private double a0;
         private List<double> a;

@@ -21,6 +21,10 @@
         <DataTemplate DataType="{x:Type vm:WienerProzessViewModel}">
             <view:WienerProcessView />
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:ImageProcessingViewModel}">
+            <view:ImageProcessingView />
+        </DataTemplate>
     </Window.Resources>
 
     <Grid>

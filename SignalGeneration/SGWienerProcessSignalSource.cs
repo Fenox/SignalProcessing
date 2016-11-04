@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SignalGeneration
 {
-    public class SGWienerProcess : ISGDiscreteSignalSource<Point1DDiscrete>
+    public class SGWienerProcessSignalSource : ISGDiscreteSignalSource<Point1DDiscrete, double>
     {
         Random rand;
 
@@ -14,9 +14,9 @@ namespace SignalGeneration
 
         public double TimeResolution { get; set; }
 
-        private SGWienerProcess() { }
+        private SGWienerProcessSignalSource() { }
 
-        public SGWienerProcess(double timeResolution, int seed)
+        public SGWienerProcessSignalSource(double timeResolution, int seed)
         {
             wienerProcess.Add(0);
             TimeResolution = timeResolution;

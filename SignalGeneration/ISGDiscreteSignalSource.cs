@@ -12,7 +12,7 @@ namespace SignalGeneration
         public double X { get; set; }
     }
 
-    public class Point2D : Point
+    public class Point2DDiscrete : Point
     {
         public double X { get; set; }
         public double Y { get; set; }
@@ -23,8 +23,14 @@ namespace SignalGeneration
         public int X { get; set; }
     }
 
-    interface ISGDiscreteSignalSource<T> where T : Point
+    public class Point2DDicsrete : Point
     {
-        double ValueAt(T position);
+        public int X { get; set; }
+        public int Y { get; set; }
+    }
+
+    interface ISGDiscreteSignalSource<T, U> where T : Point
+    {
+        U ValueAt(T position);
     }
 }
