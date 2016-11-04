@@ -1,0 +1,20 @@
+﻿SignalGeneratorTestViewer
+
+
+winexe
+C#
+.cs
+C:\Users\Julian\Documents\Visual Studio 2015\Projects\SignalGeneration\SignalGeneratorTestViewer\obj\Debug\
+SignalGeneratorTestViewer
+none
+false
+DEBUG;TRACE
+C:\Users\Julian\Documents\Visual Studio 2015\Projects\SignalGeneration\SignalGeneratorTestViewer\App.xaml
+3691974116
+
+131003376545
+19-173490795
+MainWindow.xaml;Views\FourierView.xaml;Views\WienerProcessView.xaml;
+
+True
+

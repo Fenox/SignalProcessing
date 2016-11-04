@@ -1,0 +1,5 @@
+C:\Users\Julian\Documents\Visual Studio 2015\Projects\SignalGeneration\SignalGeneration\obj\Debug\SignalGeneration.csprojResolveAssemblyReference.cache
+C:\Users\Julian\Documents\Visual Studio 2015\Projects\SignalGeneration\SignalGeneration\bin\Debug\SignalGeneration.dll
+C:\Users\Julian\Documents\Visual Studio 2015\Projects\SignalGeneration\SignalGeneration\bin\Debug\SignalGeneration.pdb
+C:\Users\Julian\Documents\Visual Studio 2015\Projects\SignalGeneration\SignalGeneration\obj\Debug\SignalGeneration.dll
+C:\Users\Julian\Documents\Visual Studio 2015\Projects\SignalGeneration\SignalGeneration\obj\Debug\SignalGeneration.pdb

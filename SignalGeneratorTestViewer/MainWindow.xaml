@@ -1,0 +1,44 @@
+﻿<Window x:Class="SignalGeneratorTestViewer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SignalGeneratorTestViewer"
+        xmlns:vm="clr-namespace:SignalGeneratorTestViewer.ViewModel"
+        xmlns:view="clr-namespace:SignalGeneratorTestViewer.Views"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+
+    <Window.DataContext>
+        <vm:MainViewModel />
+    </Window.DataContext>
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:FourierViewModel}">
+            <view:FourierView />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:WienerProzessViewModel}">
+            <view:WienerProcessView />
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <DockPanel>
+            <Border DockPanel.Dock="Left" BorderBrush="Black" BorderThickness="0,0,1,0">
+                <ItemsControl ItemsSource="{Binding PageViewModels}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding Name}"
+                                Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                CommandParameter="{Binding }"
+                                Margin="2,5"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Border>
+
+            <ContentControl Content="{Binding ContentViewModel}" />
+        </DockPanel>
+    </Grid>
+</Window>
