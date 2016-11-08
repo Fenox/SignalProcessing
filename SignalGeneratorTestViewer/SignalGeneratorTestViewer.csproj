@@ -78,12 +78,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\BrownianMotionViewModel.cs" />
     <Compile Include="ViewModel\FourierViewModel.cs" />
     <Compile Include="ViewModel\IControlViewModel.cs" />
     <Compile Include="ViewModel\ImageProcessingViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="ViewModel\WienerProzessViewModel.cs" />
+    <Compile Include="Views\BrownianMotionView.xaml.cs">
+      <DependentUpon>BrownianMotionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FourierView.xaml.cs">
       <DependentUpon>FourierView.xaml</DependentUpon>
     </Compile>
@@ -105,6 +109,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\BrownianMotionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\FourierView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

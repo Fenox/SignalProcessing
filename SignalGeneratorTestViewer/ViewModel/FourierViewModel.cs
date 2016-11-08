@@ -29,7 +29,7 @@ namespace SignalGeneratorTestViewer.ViewModel
              
             for (int i = 0; i < numPoints; i++)
             {
-                Points.Add(new DataPoint(i * 0.1, fourierSeries.ValueAt(new Point1D() { X = i * 0.1 })));
+                Points.Add(new DataPoint(i * 0.1, fourierSeries.ValueAt(new PointContinous1D() { X = i * 0.1 }).X));
             }
 
             RaisePropertyChanged("Points");

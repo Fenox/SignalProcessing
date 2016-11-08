@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SignalGeneration
 {
-    public class SGFourierSeries : ISGDiscreteSignalSource<Point1D, double>
+    public class SGFourierSeries : ISGContinousSignalSource<PointContinous1D, PointContinous1D, double>
     {
         private double a0;
         private List<double> a;
@@ -21,7 +21,7 @@ namespace SignalGeneration
             this.b = b;
         }
 
-        public double ValueAt(Point1D time)
+        public PointContinous1D ValueAt(PointContinous1D time)
         {
             double value = a0 / 2;
 
@@ -30,7 +30,7 @@ namespace SignalGeneration
                 value += a[i] * Math.Cos((i + 1) * time.X) + b[i] * Math.Sin((i + 1) * time.X);
             }
 
-            return value;
+            return new PointContinous1D() { X = value };
         }
     }
 }

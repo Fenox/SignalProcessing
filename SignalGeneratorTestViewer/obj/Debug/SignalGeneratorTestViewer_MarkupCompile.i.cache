@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Julian\documents\visual studio 2015\Projects\SignalGeneration\SignalGeneratorTestViewer\obj\Debug\
+C:\Users\Julian\Documents\Visual Studio 2015\Projects\SignalGeneration\SignalGeneratorTestViewer\obj\Debug\
 SignalGeneratorTestViewer
 none
 false
 DEBUG;TRACE
-C:\Users\Julian\documents\visual studio 2015\Projects\SignalGeneration\SignalGeneratorTestViewer\App.xaml
-4-232384178
+C:\Users\Julian\Documents\Visual Studio 2015\Projects\SignalGeneration\SignalGeneratorTestViewer\App.xaml
+5-1553427062
 
-151159975207
-20805041540
-MainWindow.xaml;Views\FourierView.xaml;Views\ImageProcessingView.xaml;Views\WienerProcessView.xaml;
+17-708727013
+20636631379
+MainWindow.xaml;Views\BrownianMotionView.xaml;Views\FourierView.xaml;Views\ImageProcessingView.xaml;Views\WienerProcessView.xaml;
 
 True
 

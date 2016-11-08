@@ -84,4 +84,56 @@ namespace SignalGeneration.SignalProcessors
             return sobleY.Process(resultX);
         }
     }
+
+    public class SGRoberts : ISignalProcessor<SGImageSignalSource, SGImageSignalSource>
+    {
+        public SGImageSignalSource Process(SGImageSignalSource input)
+        {
+            double[,] rx = { { -1, 0 }, { 0, 1 } };
+            double[,] ry = { { 0, -1 }, { 1, 0 } };
+
+            SGImageSignalSource output = new SGImageSignalSource(input.Image.Width, input.Image.Height);
+            int width = input.Image.Width;
+            int height = input.Image.Height;
+            
+
+            for (int i = 0; i < width - 1; i++)
+            {
+                for (int j = 0; j < height - 1; j++)
+                {
+                    //Gradent des Pixels
+                    double r = 0, g = 0, b = 0;
+
+                    Color xy = input.Image.GetPixel(i, j);
+                    Color xP1yP1 = input.Image.GetPixel(i + 1, j + 1);
+                    Color xP1y = input.Image.GetPixel(i + 1, j);
+                    Color xyP1 = input.Image.GetPixel(i, j + 1);
+
+                    r = Math.Abs(xy.R - xP1yP1.R) + Math.Abs(xP1y.R - xyP1.R);
+                    g = Math.Abs(xy.G - xP1yP1.G) + Math.Abs(xP1y.G - xyP1.G);
+                    b = Math.Abs(xy.B - xP1yP1.B) + Math.Abs(xP1y.B - xyP1.B);
+                    
+                    r = r > 255 ? 255 : r;
+                    g = g > 255 ? 255 : g;
+                    b = b > 255 ? 255 : b;
+
+                    r = r < 0 ? 0 : r;
+                    g = g < 0 ? 0 : g;
+                    b = b < 0 ? 0 : b;
+
+                    output.Image.SetPixel(i, j, Color.FromArgb((int)r, (int)g, (int)b));
+                }
+            }
+
+            return output;
+        }
+    }
+
+    public class SGLaplaceFilter : SGImageConvolution
+    {
+        public SGLaplaceFilter()
+        {
+            ConvolutionMatrix = new double[,] { { 0,1,0 }, { 1,-4,1 }, { 0,1,0 } };
+        }
+    }
 }

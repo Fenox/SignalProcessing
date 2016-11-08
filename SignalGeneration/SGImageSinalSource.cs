@@ -7,7 +7,7 @@ using System.Text;
 
 namespace SignalGeneration
 {
-    public class SGImageSignalSource : ISGDiscreteSignalSource<Point2DDicsrete, Color>
+    public class SGImageSignalSource : ISGDiscreteSignalSource<Point2DDiscrete, Point<int>, int>
     {
         public Bitmap Image { get; set; }
 
@@ -21,9 +21,14 @@ namespace SignalGeneration
             Image = new Bitmap(width, height);
         }
 
-        public Color ValueAt(Point2DDicsrete position)
+        public Point<int> ValueAt(Point2DDiscrete position)
         {
-            return Image.GetPixel(position.X, position.Y);
+            Color col = Image.GetPixel(position.X, position.Y);
+
+            return new Point<int>(3)
+            {
+                Values = new int[] { col.R, col.G, col.B }
+            };        
         }
     }
 }

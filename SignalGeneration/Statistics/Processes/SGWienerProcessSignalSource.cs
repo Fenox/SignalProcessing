@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SignalGeneration
 {
-    public class SGWienerProcessSignalSource : ISGDiscreteSignalSource<Point1DDiscrete, double>
+    public class SGWienerProcessSignalSource : ISGContinousSignalSource<Point<int>, PointDouble, int>
     {
         Random rand;
 
@@ -23,12 +23,19 @@ namespace SignalGeneration
             rand = new Random(seed);
         }
 
-        public double ValueAt(Point1DDiscrete position)
+        public SGWienerProcessSignalSource(double timeResolution)
         {
-            if (position.X >= wienerProcess.Count)
-                AddValuesTill(position.X);
+            wienerProcess.Add(0);
+            TimeResolution = timeResolution;
+            rand = new Random();
+        }
 
-            return wienerProcess[position.X];
+        public PointDouble ValueAt(Point<int> position)
+        {
+            if (position.Values[0] >= wienerProcess.Count)
+                AddValuesTill(position.Values[0]);
+
+            return new PointDouble(1) { Values = new double[] { wienerProcess[position.Values[0]] } };
         }
 
         private void AddValuesTill(int pos)

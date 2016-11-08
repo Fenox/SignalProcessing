@@ -25,7 +25,7 @@ namespace SignalGeneratorTestViewer.ViewModel
 
             for (int i = 0; i < 100; i++)
             {
-                Points.Add(new DataPoint(0.1 * i, wp.ValueAt(new Point1DDiscrete() { X = i })));
+                Points.Add(new DataPoint(0.1 * i, wp.ValueAt(new Point1DDiscrete() { X = i }).Values[0]));
             }
 
             RaisePropertyChanged("Points");

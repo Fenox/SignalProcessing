@@ -32,6 +32,27 @@ namespace SignalGeneratorTestViewer.ViewModel
         public RelayCommand ApplySobelYCommand { get; set; }
         public RelayCommand ApplySobelCommand { get; set; }
 
+
+        public RelayCommand ApplyRobertsCommand { get; set; }
+
+        public RelayCommand ApplyLaplaceCommand { get; set; }
+
+        public RelayCommand ImageChangedCommand { get; set; }
+
+        List<BitmapImage> images = new List<BitmapImage>();
+        public List<BitmapImage> Images
+        {
+            get
+            {
+                return images;
+            }
+            set
+            {
+                images = value;
+                RaisePropertyChanged("Images");
+            }
+        }
+
         BitmapImage image;
         public BitmapImage Image
         {
@@ -46,11 +67,15 @@ namespace SignalGeneratorTestViewer.ViewModel
             }
         }
 
-        SGImageSignalSource imageSource = new SGImageSignalSource(@"D:\OneDrive\Bilder\Icons\check-black-36px.bmp");
+        
 
         public ImageProcessingViewModel()
-        {            
-            Image = BitmapToImageSource(imageSource.Image);
+        {
+            Images.Add(new BitmapImage(new Uri(@"D:\OneDrive\Bilder\Icons\check-black-36px.bmp")));
+            Images.Add(new BitmapImage(new Uri(@"C:\Users\Julian\Pictures\Cute Cats\LowResolution\CuteCat1.bmp")));
+            Images.Add(new BitmapImage(new Uri(@"C:\Users\Julian\Pictures\Cute Cats\LowResolution\CuteCat2.bmp")));
+            Images.Add(new BitmapImage(new Uri(@"C:\Users\Julian\Pictures\Cute Cats\LowResolution\CuteCat3.bmp")));
+            Image = Images[0];
 
             ApplyGaußCommand = new RelayCommand(() => ExecuteFilter(new SGGausfilter()));
 
@@ -61,10 +86,22 @@ namespace SignalGeneratorTestViewer.ViewModel
             ApplyPrewitXCommand = new RelayCommand(() => ExecuteFilter(new SGPrewitXFilter()));
             ApplyPrewitYCommand = new RelayCommand(() => ExecuteFilter(new SGPrewitYFilter()));
             ApplyPrewitCommand = new RelayCommand(() => ExecuteFilter(new SGPrewit()));
+
+            ApplyRobertsCommand = new RelayCommand(() => ExecuteFilter(new SGRoberts()));
+
+            ApplyLaplaceCommand = new RelayCommand(() => ExecuteFilter(new SGLaplaceFilter()));
+
+            ImageChangedCommand = new RelayCommand(ChangeImage);
+        }
+
+        void ChangeImage()
+        {
+
         }
 
         void ExecuteFilter(ISignalProcessor<SGImageSignalSource, SGImageSignalSource> processor)
         {
+            SGImageSignalSource imageSource = new SGImageSignalSource(Image.UriSource.AbsolutePath);
             var res = processor.Process(imageSource);
            
             Image = BitmapToImageSource(res.Image);

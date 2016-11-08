@@ -38,3 +38,5 @@ C:\Users\Julian\Documents\Visual Studio 2015\Projects\SignalGeneration\SignalGen
 C:\Users\Julian\Documents\Visual Studio 2015\Projects\SignalGeneration\SignalGeneratorTestViewer\obj\Debug\Views\WienerProcessView.baml
 C:\Users\Julian\documents\visual studio 2015\Projects\SignalGeneration\SignalGeneratorTestViewer\obj\Debug\Views\ImageProcessingView.g.cs
 C:\Users\Julian\documents\visual studio 2015\Projects\SignalGeneration\SignalGeneratorTestViewer\obj\Debug\Views\ImageProcessingView.baml
+C:\Users\Julian\documents\visual studio 2015\Projects\SignalGeneration\SignalGeneratorTestViewer\obj\Debug\Views\BrownianMotionView.g.cs
+C:\Users\Julian\documents\visual studio 2015\Projects\SignalGeneration\SignalGeneratorTestViewer\obj\Debug\Views\BrownianMotionView.baml
