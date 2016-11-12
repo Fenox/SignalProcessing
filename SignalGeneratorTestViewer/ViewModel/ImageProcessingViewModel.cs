@@ -9,18 +9,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Media.Imaging;
+using SignalGeneration.SignalProcessors.Convolution;
 
 namespace SignalGeneratorTestViewer.ViewModel
 {
     public class ImageProcessingViewModel : ViewModelBase, IControlViewModel
     {
-        public string Name
-        {
-            get
-            {
-                return "Image Processing";
-            }
-        }
+        public string Name => "Image Processing";
 
         public RelayCommand ApplyGaußCommand { get; set; }
 
@@ -39,30 +34,30 @@ namespace SignalGeneratorTestViewer.ViewModel
 
         public RelayCommand ImageChangedCommand { get; set; }
 
-        List<BitmapImage> images = new List<BitmapImage>();
+        List<BitmapImage> _images = new List<BitmapImage>();
         public List<BitmapImage> Images
         {
             get
             {
-                return images;
+                return _images;
             }
             set
             {
-                images = value;
+                _images = value;
                 RaisePropertyChanged("Images");
             }
         }
 
-        BitmapImage image;
+        BitmapImage _image;
         public BitmapImage Image
         {
             get
             {
-                return image;
+                return _image;
             }
             set
             {
-                image = value;
+                _image = value;
                 RaisePropertyChanged("Image");
             }
         }
@@ -72,9 +67,9 @@ namespace SignalGeneratorTestViewer.ViewModel
         public ImageProcessingViewModel()
         {
             Images.Add(new BitmapImage(new Uri(@"D:\OneDrive\Bilder\Icons\check-black-36px.bmp")));
-            Images.Add(new BitmapImage(new Uri(@"C:\Users\Julian\Pictures\Cute Cats\LowResolution\CuteCat1.bmp")));
-            Images.Add(new BitmapImage(new Uri(@"C:\Users\Julian\Pictures\Cute Cats\LowResolution\CuteCat2.bmp")));
-            Images.Add(new BitmapImage(new Uri(@"C:\Users\Julian\Pictures\Cute Cats\LowResolution\CuteCat3.bmp")));
+            Images.Add(new BitmapImage(new Uri(@"C:\Users\Julian\Pictures\CuteCats\LowResolution\CuteCat1.bmp")));
+            Images.Add(new BitmapImage(new Uri(@"C:\Users\Julian\Pictures\CuteCats\LowResolution\CuteCat2.bmp")));
+            Images.Add(new BitmapImage(new Uri(@"C:\Users\Julian\Pictures\CuteCats\LowResolution\CuteCat3.bmp")));
             Image = Images[0];
 
             ApplyGaußCommand = new RelayCommand(() => ExecuteFilter(new SGGausfilter()));
@@ -101,24 +96,23 @@ namespace SignalGeneratorTestViewer.ViewModel
 
         void ExecuteFilter(ISignalProcessor<SGImageSignalSource, SGImageSignalSource> processor)
         {
-            SGImageSignalSource imageSource = new SGImageSignalSource(Image.UriSource.AbsolutePath);
-            var res = processor.Process(imageSource);
+            var imageSource = new SGImageSignalSource(Image.UriSource.AbsolutePath);
+            SGImageSignalSource res = processor.Process(imageSource);
            
             Image = BitmapToImageSource(res.Image);
 
             imageSource.Image.Dispose();
-            imageSource = res; 
 
             RaisePropertyChanged("Image");
         }
 
-        BitmapImage BitmapToImageSource(Bitmap bitmap)
+        private BitmapImage BitmapToImageSource(Image bitmap)
         {
             using (MemoryStream memory = new MemoryStream())
             {
                 bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
                 memory.Position = 0;
-                BitmapImage bitmapimage = new BitmapImage();
+                var bitmapimage = new BitmapImage();
                 bitmapimage.BeginInit();
                 bitmapimage.StreamSource = memory;
                 bitmapimage.CacheOption = BitmapCacheOption.OnLoad;

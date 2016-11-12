@@ -42,7 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ArrayUtils.cs" />
+    <Compile Include="Common\ColorUtils.cs" />
     <Compile Include="SignalProcessors\SGDerivative.cs" />
+    <Compile Include="SignalProcessors\SGVHistoricVolatilityProcessor.cs" />
     <Compile Include="Statistics\Distributions\RandomExtensions.cs" />
     <Compile Include="SGFourierSeries.cs" />
     <Compile Include="SGImageSinalSource.cs" />

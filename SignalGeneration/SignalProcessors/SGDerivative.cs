@@ -5,19 +5,19 @@ using System.Text;
 
 namespace SignalGeneration.SignalProcessors
 {
-    public class SGDForwarderivativeProcessor : ISGContinousSignalSource<Point<int>, PointDouble, int>
+    public class SGDForwarderivativeProcessor : ISGDiscreteSignalSource<Point<int>, PointDouble, double>
     {
-        ISGContinousSignalSource<Point<int>, PointDouble, int> InputSignal;
+        private readonly ISGDiscreteSignalSource<Point<int>, PointDouble, double> _inputSignal;
 
-        public SGDForwarderivativeProcessor(ISGContinousSignalSource<Point<int>, PointDouble, int> input)
+        public SGDForwarderivativeProcessor(ISGDiscreteSignalSource<Point<int>, PointDouble, double> input)
         {
-            InputSignal = input;
+            _inputSignal = input;
         }
 
         public PointDouble ValueAt(Point<int> position)
         {
-            PointDouble valueAtPos = InputSignal.ValueAt(position);
-            PointDouble derivative = new PointDouble(position.Dimensions);
+            PointDouble valueAtPos = _inputSignal.ValueAt(position);
+            var derivative = new PointDouble(position.Dimensions);
 
             for(int i = 0; i < position.Values.Length; i++)
             {
@@ -25,7 +25,7 @@ namespace SignalGeneration.SignalProcessors
                 Array.Copy(position.Values, posP1Arr, valueAtPos.Values.Length);
                 posP1Arr[i] += 1;
 
-                PointDouble posPlus1 = InputSignal.ValueAt(new Point<int>(valueAtPos.Dimensions) { Values = posP1Arr });
+                PointDouble posPlus1 = _inputSignal.ValueAt(new Point<int>(valueAtPos.Dimensions) { Values = posP1Arr });
 
                 //Calculate Forward Derivative in Direction i
                 derivative = posPlus1 - valueAtPos;

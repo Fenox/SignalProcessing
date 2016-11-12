@@ -8,15 +8,9 @@ using System.Text;
 
 namespace SignalGeneratorTestViewer.ViewModel
 {
-    public class WienerProzessViewModel : ViewModelBase, IControlViewModel
+    public sealed class WienerProzessViewModel : ViewModelBase, IControlViewModel
     {
-        public string Name
-        {
-            get
-            {
-                return "Wiener Prozess";
-            }
-        }
+        public string Name => "Wiener Prozess";
         public IList<DataPoint> Points { get; set; } = new List<DataPoint>();
 
         public WienerProzessViewModel()

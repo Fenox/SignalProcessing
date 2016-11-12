@@ -1,8 +1,4 @@
 ﻿using SignalGeneration.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SignalGeneration
 {
@@ -40,6 +36,11 @@ namespace SignalGeneration
                 Values = ArrayUtils.Sub(p1.Values, p2.Values)
             };
         }
+    }
+
+    public class PointInt : Point<int>
+    {
+        public PointInt(int dimensions) : base(dimensions) {  }
     }
 
     public class PointContinous1D : Point<double>
@@ -95,26 +96,26 @@ namespace SignalGeneration
         }
     }
 
-    public interface ISGDiscreteSignalSource<IN, OUT, TPointIN> 
-        : ISGSignalSource<IN, OUT, TPointIN, int> 
-            where OUT : Point<int>
-            where IN : Point<TPointIN> 
+    public interface ISGDiscreteSignalSource<TIn, TOut, TPointOut> 
+        : ISGSignalSource<TIn, TOut, int, TPointOut> 
+            where TOut : Point<TPointOut>
+            where TIn : Point<int> 
     {
 
     }
 
-    public interface ISGContinousSignalSource<IN, OUT, TPointIN> 
-        : ISGSignalSource<IN, OUT, TPointIN, double> 
-            where OUT : Point<double>
-            where IN : Point<TPointIN>
+    public interface ISGContinousSignalSource<TIn, TOut, TPointOut> 
+        : ISGSignalSource<TIn, TOut, double, TPointOut> 
+            where TOut : Point<TPointOut>
+            where TIn : Point<double>
     {
 
     }
 
-    public interface ISGSignalSource<IN, OUT, TPointIN, TPointOUT>
-        where OUT : Point<TPointOUT>
-        where IN : Point<TPointIN>
+    public interface ISGSignalSource<in TIn, out TOut, TPointIn, TPointOut>
+        where TOut : Point<TPointOut>
+        where TIn : Point<TPointIn>
     {
-        OUT ValueAt(IN position);
+        TOut ValueAt(TIn position);
     }
 }

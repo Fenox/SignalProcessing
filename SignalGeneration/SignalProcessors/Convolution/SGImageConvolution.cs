@@ -8,12 +8,12 @@ namespace SignalGeneration.SignalProcessors.Convolution
 {
     public class SGImageConvolution : ISignalProcessor<SGImageSignalSource, SGImageSignalSource>
     {
-        double[,] convMatrix;
+        double[,] _convMatrix;
         public double[,] ConvolutionMatrix
         {
             get
             {
-                return convMatrix;
+                return _convMatrix;
             }
             set
             {
@@ -23,7 +23,7 @@ namespace SignalGeneration.SignalProcessors.Convolution
                 if (value.GetLength(0) % 2 == 0)
                     throw new ArgumentException("Width and Height of convolution matrix must not be even.");
 
-                convMatrix = value;
+                _convMatrix = value;
             }
         }
 
@@ -36,7 +36,7 @@ namespace SignalGeneration.SignalProcessors.Convolution
 
         public SGImageSignalSource Process(SGImageSignalSource input)
         {
-            SGImageSignalSource output = new SGImageSignalSource(input.Image.Width, input.Image.Height);
+            var output = new SGImageSignalSource(input.Image.Width, input.Image.Height);
             int width = input.Image.Width;
             int height = input.Image.Height;
 

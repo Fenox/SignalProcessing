@@ -1,36 +1,101 @@
 ﻿using GalaSoft.MvvmLight;
 using OxyPlot;
 using SignalGeneration;
+using SignalGeneration.SignalProcessors;
 using SignalGeneration.Statistics.Processes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GalaSoft.MvvmLight.Command;
 
 namespace SignalGeneratorTestViewer.ViewModel
 {
-    public class BrownianMotionViewModel : ViewModelBase, IControlViewModel
+    public sealed class BrownianMotionViewModel : ViewModelBase, IControlViewModel
     {
-        public string Name
+        public string Name => "Brownian Motion";
+
+        private string _volatility;
+        public string Volatility
         {
-            get
+            get { return _volatility; }
+            set
             {
-                return "Brownian Motion";
+                _volatility = value;
+                RaisePropertyChanged("Volatility");
             }
         }
+
+        private string _variance;
+        public string Variance
+        {
+            get { return _variance; }
+            set
+            {
+                _variance = value;
+                RaisePropertyChanged("Variance");
+            }
+        }
+
+        private double _vola = 0.2;
+        public double Vola
+        {
+            get { return _vola; }
+            set
+            {
+                _vola = value;
+                RaisePropertyChanged("Vola");
+            }
+        }
+
+        private double _mean = 0.05;
+        public double Mean
+        {
+            get { return _mean; }
+            set
+            {
+                _mean = value;
+                RaisePropertyChanged("Mean");
+            }
+        }
+
+        private int _steps = 100;
+        public int Steps
+        {
+            get { return _steps; }
+            set
+            {
+                _steps = value;
+                RaisePropertyChanged("Steps");
+            }
+        }
+
+        public RelayCommand NewRandomProcess { get; set; }
+
 
         public IList<DataPoint> Points { get; set; } = new List<DataPoint>();
 
         public BrownianMotionViewModel()
         {
-            SGBrownianMotionSignalSource wp = new SGBrownianMotionSignalSource(1, 0.1, new double[] { 0.05 }, new double[] { 0.05 });
+            CreateNewProcess();
+            NewRandomProcess = new RelayCommand(CreateNewProcess);
+        }
 
-            for (int i = 0; i < 1000; i++)
+        private void CreateNewProcess()
+        {
+            Points = new List<DataPoint>();
+            var wp = new SGBrownianMotionSignalSource(1, 0.1, new[] { Mean }, new[] { Vola });
+
+            for (int i = 0; i < Steps; i++)
             {
                 Points.Add(new DataPoint(wp.TimeDelta * i, wp.ValueAt(new Point1DDiscrete() { X = i }).Values[0]));
             }
 
             RaisePropertyChanged("Points");
+
+            SGHistoricVolatilityProcessor volaProcessor = new SGHistoricVolatilityProcessor(Steps / 2, Steps);
+            Variance = volaProcessor.GetVariance(wp).ToString("F3");
+            Volatility = volaProcessor.GetVola(wp, wp.TimeDelta).ToString("F3");
         }
     }
 }

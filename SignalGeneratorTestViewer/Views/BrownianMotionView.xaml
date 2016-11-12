@@ -2,16 +2,51 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SignalGeneratorTestViewer.Views"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
              xmlns:oxy="http://oxyplot.org/wpf"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <oxy:Plot Title="Brownian Motion">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <oxy:Plot Grid.Row="0" Title="Brownian Motion">
             <oxy:Plot.Series>
                 <oxy:LineSeries ItemsSource="{Binding Points}" />
             </oxy:Plot.Series>
         </oxy:Plot>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Margin="5">
+                <TextBlock Text="Statistics" />
+                <TextBlock Text="{Binding Path=Volatility, StringFormat='Volatility: {0}'}" />
+                <TextBlock Text="{Binding Path=Variance, StringFormat='Variance: {0}'}" />
+            </StackPanel>
+
+            <StackPanel Grid.Column="1">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Mean:      "/>
+                    <TextBox Text="{Binding Mean}" Width="100"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Vola: "/>
+                    <TextBox Text="{Binding Vola}" Width="100"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Steps: "/>
+                    <TextBox Text="{Binding Steps}" Width="100"/>
+                </StackPanel>
+                <Button Content="New Random Process" Margin="5" Command="{Binding NewRandomProcess}" />
+            </StackPanel>
+            
+            
+        </Grid>
     </Grid>
 </UserControl>

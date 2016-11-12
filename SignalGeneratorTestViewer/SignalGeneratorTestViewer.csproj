@@ -88,6 +88,9 @@
     <Compile Include="Views\BrownianMotionView.xaml.cs">
       <DependentUpon>BrownianMotionView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ForwardView.xaml.cs">
+      <DependentUpon>ForwardView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FourierView.xaml.cs">
       <DependentUpon>FourierView.xaml</DependentUpon>
     </Compile>
@@ -110,6 +113,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\BrownianMotionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ForwardView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

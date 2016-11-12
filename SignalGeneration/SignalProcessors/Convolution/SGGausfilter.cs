@@ -1,15 +1,11 @@
-﻿using SignalGeneration.SignalProcessors.Convolution;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 
-namespace SignalGeneration.SignalProcessors
+namespace SignalGeneration.SignalProcessors.Convolution
 {
-    public interface ISignalProcessor<T, U>
+    public interface ISignalProcessor<in TIn, out TOut>
     {
-        T Process(U source);
+        TOut Process(TIn source);
     }
 
     
@@ -18,7 +14,7 @@ namespace SignalGeneration.SignalProcessors
     {
         public SGGausfilter()
         {
-            double[,] conv = new double[,] { { 1.0/16, 2.0/16, 1.0/16 }, { 2.0/16, 4.0/16, 2.0 /16}, { 1.0/16, 2.0/16, 1.0/16 } };
+            double[,] conv = { { 1.0/16, 2.0/16, 1.0/16 }, { 2.0/16, 4.0/16, 2.0 /16}, { 1.0/16, 2.0/16, 1.0/16 } };
             ConvolutionMatrix = conv;
         }
     }
@@ -27,7 +23,7 @@ namespace SignalGeneration.SignalProcessors
     {
         public SGPrewitXFilter()
         {
-            double[,] conv = new double[,] { { -1.0, 0.0, 1.0 }, { -1.0, 0.0, 1.0 }, { -1.0, 0.0, 1.0 } };
+            double[,] conv = { { -1.0, 0.0, 1.0 }, { -1.0, 0.0, 1.0 }, { -1.0, 0.0, 1.0 } };
             ConvolutionMatrix = conv;
         }
     }
@@ -36,7 +32,7 @@ namespace SignalGeneration.SignalProcessors
     {
         public SGPrewitYFilter()
         {
-            double[,] conv = new double[,] { { -1.0, -1.0, -1.0 }, { 0.0, 0.0, 0.0 }, { 1.0, 1.0, 1.0 } };
+            double[,] conv = { { -1.0, -1.0, -1.0 }, { 0.0, 0.0, 0.0 }, { 1.0, 1.0, 1.0 } };
             ConvolutionMatrix = conv;
         }
     }
@@ -45,10 +41,10 @@ namespace SignalGeneration.SignalProcessors
     {
         public SGImageSignalSource Process(SGImageSignalSource source)
         {
-            SGPrewitXFilter prewitX = new SGPrewitXFilter();
-            var resultX = prewitX.Process(source);
+            var prewitX = new SGPrewitXFilter();
+            SGImageSignalSource resultX = prewitX.Process(source);
 
-            SGPrewitYFilter prewitY = new SGPrewitYFilter();
+            var prewitY = new SGPrewitYFilter();
             return prewitY.Process(resultX);
         }
     }
@@ -57,7 +53,7 @@ namespace SignalGeneration.SignalProcessors
     {
         public SGSobelX()
         {
-            double[,] conv = new double[,] { { -1.0, 0.0, 1.0 }, { -2.0, 0.0, 2.0 }, { -1.0, 0.0, 1.0 } };
+            double[,] conv = { { -1.0, 0.0, 1.0 }, { -2.0, 0.0, 2.0 }, { -1.0, 0.0, 1.0 } };
             ConvolutionMatrix = conv;
         }
     }
@@ -67,7 +63,7 @@ namespace SignalGeneration.SignalProcessors
     {
         public SGSobelY()
         {
-            double[,] conv = new double[,] { { -1.0, -2.0, -1.0 }, { 0.0, 0.0, 0.0 }, { 1.0, 2.0, 1.0 } };
+            double[,] conv = { { -1.0, -2.0, -1.0 }, { 0.0, 0.0, 0.0 }, { 1.0, 2.0, 1.0 } };
             ConvolutionMatrix = conv;
         }
     }
@@ -77,10 +73,10 @@ namespace SignalGeneration.SignalProcessors
     {
         public SGImageSignalSource Process(SGImageSignalSource source)
         {
-            SGSobelX sobelX = new SGSobelX();
-            var resultX = sobelX.Process(source);
+            var sobelX = new SGSobelX();
+            SGImageSignalSource resultX = sobelX.Process(source);
 
-            SGSobelY sobleY = new SGSobelY();
+            var sobleY = new SGSobelY();
             return sobleY.Process(resultX);
         }
     }
@@ -89,10 +85,7 @@ namespace SignalGeneration.SignalProcessors
     {
         public SGImageSignalSource Process(SGImageSignalSource input)
         {
-            double[,] rx = { { -1, 0 }, { 0, 1 } };
-            double[,] ry = { { 0, -1 }, { 1, 0 } };
-
-            SGImageSignalSource output = new SGImageSignalSource(input.Image.Width, input.Image.Height);
+            var output = new SGImageSignalSource(input.Image.Width, input.Image.Height);
             int width = input.Image.Width;
             int height = input.Image.Height;
             
@@ -101,8 +94,8 @@ namespace SignalGeneration.SignalProcessors
             {
                 for (int j = 0; j < height - 1; j++)
                 {
-                    //Gradent des Pixels
-                    double r = 0, g = 0, b = 0;
+                    //Gradient des Pixels
+                    double r, g, b;
 
                     Color xy = input.Image.GetPixel(i, j);
                     Color xP1yP1 = input.Image.GetPixel(i + 1, j + 1);

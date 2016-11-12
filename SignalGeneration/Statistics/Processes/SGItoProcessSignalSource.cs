@@ -7,58 +7,58 @@ using System.Text;
 
 namespace SignalGeneration.Statistics.Processes
 {
-    public class SGItoProcessSignalSource : ISGContinousSignalSource<Point1DDiscrete, Point<double>, int>
+    public class SGItoProcessSignalSource : ISGDiscreteSignalSource<Point<int>, PointDouble, double>
     {
-        List<Point<double>> Values = new List<Point<double>>();
+        private readonly List<Point<double>> _values = new List<Point<double>>();
 
-        private int dimensions;
-        List<SGDForwarderivativeProcessor> wienerProcessDeltas = new List<SGDForwarderivativeProcessor>();
-        public double TimeDelta { get; private set; }
-        Func<double[], double, double[]> a;
-        Func<double[], double, double[]> b;
-        
+        private readonly int _dimensions;
+        private readonly List<SGDForwarderivativeProcessor> _wienerProcessDeltas = new List<SGDForwarderivativeProcessor>();
+        private readonly Func<double[], double, double[]> _a;
+        private readonly Func<double[], double, double[]> _b;
+
+        public double TimeDelta { get; }
 
         public SGItoProcessSignalSource(int dim, double timeDelta, Func<double[], double, double[]> a, Func<double[], double, double[]> b, double[] startValue)
         {
             TimeDelta = timeDelta;
-            this.a = a;
-            this.b = b;
+            _a = a;
+            _b = b;
 
-            Values.Add(new Point<double>(dim) { Values = startValue });
+            _values.Add(new Point<double>(dim) { Values = startValue });
 
-            dimensions = dim;
+            _dimensions = dim;
             for (int i = 0; i < dim; i++)
             {
                 var wp = new SGWienerProcessSignalSource(timeDelta);
                 var wpd = new SGDForwarderivativeProcessor(wp);
-                wienerProcessDeltas.Add(wpd);
+                _wienerProcessDeltas.Add(wpd);
             }
         }
 
-        public Point<double> ValueAt(Point1DDiscrete position)
+        public PointDouble ValueAt(Point<int> position)
         {
-            if (position.X >= Values.Count)
+            if (position.Values[0] >= _values.Count)
                 AddValuesTill(position);
 
-            return new Point<double>(dimensions) { Values = Values[position.X].Values };
+            return new PointDouble(_dimensions) { Values = _values[position.Values[0]].Values };
         }
 
-        public void AddValuesTill(Point1DDiscrete position)
+        public void AddValuesTill(Point<int> position)
         {
-            if (position.X == 0)
+            if (position.Values[0] == 0)
                 return;
 
-            while (Values.Count <= position.X)
+            while (_values.Count <= position.Values[0])
             {
-                double[] newDelta = new double[dimensions];
+                double[] newDelta = new double[_dimensions];
 
-                double[] Xt = Values[position.X - 1].Values;
+                double[] Xt = _values[position.Values[0] - 1].Values;
 
-                for (int i = 0; i < dimensions; i++)
-                    newDelta[i] = a(Xt, position.X)[i] * TimeDelta + b(Xt, TimeDelta)[i] * wienerProcessDeltas[i].ValueAt(position).Values[0];
+                for (int i = 0; i < _dimensions; i++)
+                    newDelta[i] = _a(Xt, position.Values[0])[i] * TimeDelta + _b(Xt, TimeDelta)[i] * _wienerProcessDeltas[i].ValueAt(position).Values[0];
                 
-                var newPoint = new Point<double>(dimensions) { Values = ArrayUtils.Add(newDelta, Xt) };
-                Values.Add(newPoint);
+                var newPoint = new Point<double>(_dimensions) { Values = ArrayUtils.Add(newDelta, Xt) };
+                _values.Add(newPoint);
             }
         }
     }
@@ -68,8 +68,8 @@ namespace SignalGeneration.Statistics.Processes
         public SGBrownianMotionSignalSource(int dim, double timeDelta, double[] drift, double[] vola) : 
             base(dim,
                 timeDelta, 
-                new Func<double[], double, double[]>((a, b) => ArrayUtils.Mult(drift, a)), 
-                new Func<double[], double, double[]>((a, b) => ArrayUtils.Mult(vola, a)),
+                (a, b) => ArrayUtils.Mult(drift, a), 
+                (a, b) => ArrayUtils.Mult(vola, a),
                 new double[] { 10 })
         {
 
