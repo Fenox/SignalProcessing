@@ -1,6 +1,15 @@
 # SignalProcessing
-This Library provides classes for Signal-Processing and Generation.
-Signal Generation includes Statistical Processes like Ito-Processes, Fourier-Series and more
-Signal Processing includes Image-Processing classes like Sobel Filters and many more.
+This library provides classes for signal-processing and generation.
+Signal generation includes statistical processes like ito-processes, fourier-series and more.
+Signal processing includes image-processing classes like fobel filters and many more.
+Everything is based on few base classes for signals.
 
-Everything is based on few Signal base classes.
+## Example
+See [Wiki](../../wiki)
+
+## Getting Started
+If you want to chechout the project get a copy of the project and run it with Visual Studio.
+
+### Prerequisites
+Visual Studio with .NET Framework 4.
+
