@@ -8,9 +8,19 @@
              xmlns:oxy="http://oxyplot.org/wpf"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <oxy:Plot Title="Fourier Series">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <oxy:Plot Grid.Row="0" Title="Fourier Series">
             <oxy:Plot.Series>
                 <oxy:LineSeries ItemsSource="{Binding Points}" />
+            </oxy:Plot.Series>
+        </oxy:Plot>
+        
+        <oxy:Plot Grid.Row="1" Title="Fourier Transformed Fourier Series">
+            <oxy:Plot.Series>
+                <oxy:LineSeries ItemsSource="{Binding TransformedPoints}" />
             </oxy:Plot.Series>
         </oxy:Plot>
     </Grid>

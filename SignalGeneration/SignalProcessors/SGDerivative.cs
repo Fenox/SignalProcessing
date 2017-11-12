@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SignalGeneration.SignalProcessors
 {
-    public class SGDForwarderivativeProcessor : ISGDiscreteSignalSource<Point<int>, PointDouble, double>
+    public class SGDForwarderivativeProcessor : ISGTimeDiscreteSignalSource<Point<int>, PointDouble, double>
     {
-        private readonly ISGDiscreteSignalSource<Point<int>, PointDouble, double> _inputSignal;
+        private readonly ISGTimeDiscreteSignalSource<Point<int>, PointDouble, double> _inputSignal;
 
-        public SGDForwarderivativeProcessor(ISGDiscreteSignalSource<Point<int>, PointDouble, double> input)
+        public SGDForwarderivativeProcessor(ISGTimeDiscreteSignalSource<Point<int>, PointDouble, double> input)
         {
             _inputSignal = input;
         }

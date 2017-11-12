@@ -19,6 +19,7 @@ namespace SignalGeneratorTestViewer.ViewModel
             _pageViewModels.Add(new WienerProzessViewModel());
             _pageViewModels.Add(new ImageProcessingViewModel());
             _pageViewModels.Add(new BrownianMotionViewModel());
+            _pageViewModels.Add(new OptionViewModel());
 
             ContentViewModel = _pageViewModels[0];
 

@@ -3,10 +3,7 @@ using OxyPlot;
 using SignalGeneration;
 using SignalGeneration.SignalProcessors;
 using SignalGeneration.Statistics.Processes;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using GalaSoft.MvvmLight.Command;
 
 namespace SignalGeneratorTestViewer.ViewModel
@@ -84,7 +81,7 @@ namespace SignalGeneratorTestViewer.ViewModel
         private void CreateNewProcess()
         {
             Points = new List<DataPoint>();
-            var wp = new SGBrownianMotionSignalSource(1, 0.1, new[] { Mean }, new[] { Vola });
+            var wp = new IsgTimeBrownianMotionSignalSource(1, 0.1, new[] { Mean }, new[] { Vola });
 
             for (int i = 0; i < Steps; i++)
             {

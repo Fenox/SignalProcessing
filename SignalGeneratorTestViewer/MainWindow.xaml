@@ -29,6 +29,10 @@
         <DataTemplate DataType="{x:Type vm:BrownianMotionViewModel}">
             <view:BrownianMotionView />
         </DataTemplate>
+        
+        <DataTemplate DataType="{x:Type vm:OptionViewModel}">
+            <view:OptionsView/>
+        </DataTemplate>
     </Window.Resources>
 
     <Grid>

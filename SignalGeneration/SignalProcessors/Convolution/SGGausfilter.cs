@@ -37,12 +37,12 @@ namespace SignalGeneration.SignalProcessors.Convolution
         }
     }
 
-    public class SGPrewit : ISignalProcessor<SGImageSignalSource, SGImageSignalSource>
+    public class SGPrewit : ISignalProcessor<IsgTimeImageSignalSource, IsgTimeImageSignalSource>
     {
-        public SGImageSignalSource Process(SGImageSignalSource source)
+        public IsgTimeImageSignalSource Process(IsgTimeImageSignalSource source)
         {
             var prewitX = new SGPrewitXFilter();
-            SGImageSignalSource resultX = prewitX.Process(source);
+            IsgTimeImageSignalSource resultX = prewitX.Process(source);
 
             var prewitY = new SGPrewitYFilter();
             return prewitY.Process(resultX);
@@ -69,23 +69,23 @@ namespace SignalGeneration.SignalProcessors.Convolution
     }
 
 
-    public class SGSobel : ISignalProcessor<SGImageSignalSource, SGImageSignalSource>
+    public class SGSobel : ISignalProcessor<IsgTimeImageSignalSource, IsgTimeImageSignalSource>
     {
-        public SGImageSignalSource Process(SGImageSignalSource source)
+        public IsgTimeImageSignalSource Process(IsgTimeImageSignalSource source)
         {
             var sobelX = new SGSobelX();
-            SGImageSignalSource resultX = sobelX.Process(source);
+            IsgTimeImageSignalSource resultX = sobelX.Process(source);
 
             var sobleY = new SGSobelY();
             return sobleY.Process(resultX);
         }
     }
 
-    public class SGRoberts : ISignalProcessor<SGImageSignalSource, SGImageSignalSource>
+    public class SGRoberts : ISignalProcessor<IsgTimeImageSignalSource, IsgTimeImageSignalSource>
     {
-        public SGImageSignalSource Process(SGImageSignalSource input)
+        public IsgTimeImageSignalSource Process(IsgTimeImageSignalSource input)
         {
-            var output = new SGImageSignalSource(input.Image.Width, input.Image.Height);
+            var output = new IsgTimeImageSignalSource(input.Image.Width, input.Image.Height);
             int width = input.Image.Width;
             int height = input.Image.Height;
             

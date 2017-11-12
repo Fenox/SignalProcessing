@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SignalGeneration
 {
-    public class SGFourierSeries : ISGContinousSignalSource<PointContinous1D, PointContinous1D, double>
+    public class SGTimeFourierSeries : ISGTimeContinousSignalSource<PointContinous1D, PointContinous1D, double>
     {
         private double a0;
         private List<double> a;
         private List<double> b;
 
-        public SGFourierSeries(double a0, List<double> a, List<double> b)
+        public SGTimeFourierSeries(double a0, List<double> a, List<double> b)
         {
             if (a.Count != b.Count)
                 throw new ArgumentException("Length of a must be equal to b");

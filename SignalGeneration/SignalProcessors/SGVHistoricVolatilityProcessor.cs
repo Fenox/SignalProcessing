@@ -3,7 +3,7 @@ using SignalGeneration.SignalProcessors.Convolution;
 
 namespace SignalGeneration.SignalProcessors
 {
-    public class SGHistoricVolatilityProcessor : ISignalProcessor<ISGDiscreteSignalSource<Point<int>, PointDouble, double>, double>
+    public class SGHistoricVolatilityProcessor : ISignalProcessor<ISGTimeDiscreteSignalSource<Point<int>, PointDouble, double>, double>
     {
         public int NumStepsBack { get; set; }
         public int LastValueIndex { get; set; }
@@ -14,7 +14,7 @@ namespace SignalGeneration.SignalProcessors
             LastValueIndex = lastValueIndex;
         }
 
-        public double Process(ISGDiscreteSignalSource<Point<int>, PointDouble, double> source)
+        public double Process(ISGTimeDiscreteSignalSource<Point<int>, PointDouble, double> source)
         {
             double vola = 0;
 
@@ -39,12 +39,12 @@ namespace SignalGeneration.SignalProcessors
             return vola / (NumStepsBack - 1);
         }
 
-        public double GetVariance(ISGDiscreteSignalSource<Point<int>, PointDouble, double> source)
+        public double GetVariance(ISGTimeDiscreteSignalSource<Point<int>, PointDouble, double> source)
         {
             return Process(source) / NumStepsBack;
         }
 
-        public double GetVola(ISGDiscreteSignalSource<Point<int>, PointDouble, double> source, double deltaTime)
+        public double GetVola(ISGTimeDiscreteSignalSource<Point<int>, PointDouble, double> source, double deltaTime)
         {
             return Math.Sqrt(Process(source) / deltaTime) / NumStepsBack;
         }

@@ -1,15 +1,13 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using SignalGeneration;
-using SignalGeneration.SignalProcessors;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Media.Imaging;
 using SignalGeneration.SignalProcessors.Convolution;
+using SignalGeneration.Common;
 
 namespace SignalGeneratorTestViewer.ViewModel
 {
@@ -66,10 +64,10 @@ namespace SignalGeneratorTestViewer.ViewModel
 
         public ImageProcessingViewModel()
         {
-            Images.Add(new BitmapImage(new Uri(@"D:\OneDrive\Bilder\Icons\check-black-36px.bmp")));
-            Images.Add(new BitmapImage(new Uri(@"C:\Users\Julian\Pictures\CuteCats\LowResolution\CuteCat1.bmp")));
-            Images.Add(new BitmapImage(new Uri(@"C:\Users\Julian\Pictures\CuteCats\LowResolution\CuteCat2.bmp")));
-            Images.Add(new BitmapImage(new Uri(@"C:\Users\Julian\Pictures\CuteCats\LowResolution\CuteCat3.bmp")));
+            Images.Add(new BitmapImage(new Uri("/SignalGeneratorTestViewer;component/Assets/check-white-36px.png", UriKind.Relative)));
+            Images.Add(new BitmapImage(new Uri("/SignalGeneratorTestViewer;component/Assets/CuteCat1.bmp", UriKind.Relative)));
+            Images.Add(new BitmapImage(new Uri("/SignalGeneratorTestViewer;component/Assets/CuteCat2.bmp", UriKind.Relative)));
+            Images.Add(new BitmapImage(new Uri("/SignalGeneratorTestViewer;component/Assets/CuteCat3.bmp", UriKind.Relative)));
             Image = Images[0];
 
             ApplyGaußCommand = new RelayCommand(() => ExecuteFilter(new SGGausfilter()));
@@ -85,25 +83,22 @@ namespace SignalGeneratorTestViewer.ViewModel
             ApplyRobertsCommand = new RelayCommand(() => ExecuteFilter(new SGRoberts()));
 
             ApplyLaplaceCommand = new RelayCommand(() => ExecuteFilter(new SGLaplaceFilter()));
-
-            ImageChangedCommand = new RelayCommand(ChangeImage);
+            
         }
 
-        void ChangeImage()
+        void ExecuteFilter(ISignalProcessor<IsgTimeImageSignalSource, IsgTimeImageSignalSource> processor)
         {
+            //Get a copy of the selected image and create new image, that can be operated on
+            var imageSource = new IsgTimeImageSignalSource(Image.BitmapImage2Bitmap());            
 
-        }
-
-        void ExecuteFilter(ISignalProcessor<SGImageSignalSource, SGImageSignalSource> processor)
-        {
-            var imageSource = new SGImageSignalSource(Image.UriSource.AbsolutePath);
-            SGImageSignalSource res = processor.Process(imageSource);
+            //Use the selected filter on the image
+            IsgTimeImageSignalSource res = processor.Process(imageSource);
            
+            //Change the image in the view
             Image = BitmapToImageSource(res.Image);
 
+            //dispose the copied image
             imageSource.Image.Dispose();
-
-            RaisePropertyChanged("Image");
         }
 
         private BitmapImage BitmapToImageSource(Image bitmap)

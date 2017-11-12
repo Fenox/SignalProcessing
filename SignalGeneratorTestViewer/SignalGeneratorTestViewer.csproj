@@ -83,6 +83,7 @@
     <Compile Include="ViewModel\IControlViewModel.cs" />
     <Compile Include="ViewModel\ImageProcessingViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\OptionViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="ViewModel\WienerProzessViewModel.cs" />
     <Compile Include="Views\BrownianMotionView.xaml.cs">
@@ -96,6 +97,9 @@
     </Compile>
     <Compile Include="Views\ImageProcessingView.xaml.cs">
       <DependentUpon>ImageProcessingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OptionsView.xaml.cs">
+      <DependentUpon>OptionsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WienerProcessView.xaml.cs">
       <DependentUpon>WienerProcessView.xaml</DependentUpon>
@@ -125,6 +129,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ImageProcessingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OptionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -163,6 +171,14 @@
       <Project>{4d633303-2a06-4a8c-a193-879d3159d50b}</Project>
       <Name>SignalGeneration</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\CuteCat1.bmp" />
+    <Resource Include="Assets\CuteCat2.bmp" />
+    <Resource Include="Assets\CuteCat3.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\check-white-36px.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

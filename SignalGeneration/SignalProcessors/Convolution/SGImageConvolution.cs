@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 
 namespace SignalGeneration.SignalProcessors.Convolution
 {
-    public class SGImageConvolution : ISignalProcessor<SGImageSignalSource, SGImageSignalSource>
+    public class SGImageConvolution : ISignalProcessor<IsgTimeImageSignalSource, IsgTimeImageSignalSource>
     {
         double[,] _convMatrix;
         public double[,] ConvolutionMatrix
@@ -34,9 +31,9 @@ namespace SignalGeneration.SignalProcessors.Convolution
             ConvolutionMatrix = convolutionMatrix;
         }
 
-        public SGImageSignalSource Process(SGImageSignalSource input)
+        public IsgTimeImageSignalSource Process(IsgTimeImageSignalSource input)
         {
-            var output = new SGImageSignalSource(input.Image.Width, input.Image.Height);
+            var output = new IsgTimeImageSignalSource(input.Image.Width, input.Image.Height);
             int width = input.Image.Width;
             int height = input.Image.Height;
 

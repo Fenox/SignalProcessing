@@ -1,10 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using OxyPlot;
 using SignalGeneration;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SignalGeneratorTestViewer.ViewModel
 {
@@ -15,7 +12,7 @@ namespace SignalGeneratorTestViewer.ViewModel
 
         public WienerProzessViewModel()
         {
-            SGWienerProcessSignalSource wp = new SGWienerProcessSignalSource(0.1, 1);
+            IsgTimeWienerProcessSignalSource wp = new IsgTimeWienerProcessSignalSource(0.1, 1);
 
             for (int i = 0; i < 100; i++)
             {
